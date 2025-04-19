@@ -104,17 +104,20 @@ class Users {
 
 
     // Find user by email
-  findOne(query) {
-  return new Promise((resolve, reject) => {
-    this.db.find(query, function (err, docs) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(docs.length > 0 ? docs[0] : null); // Return null if no documents found
+    findOne(query) {
+        return new Promise((resolve, reject) => {
+          this.db.find(query, function (err, docs) {
+            if (err) {
+              reject(err);
+            } else {
+              const user = docs.length > 0 ? docs[0] : null;
+              console.log("Found user:", user);
+              resolve(user);
+            }
+          });
+        });
       }
-    });
-  });
-}
+      
 
 
     updateUserById(id, updatedData) {

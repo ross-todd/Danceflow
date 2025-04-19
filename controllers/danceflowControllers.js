@@ -2,27 +2,28 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
-// === Database Initializations ===
-// Import all models and initialize databases
-const Classes = require("../models/classesModel");
-const classesDb = new Classes("classes.db");
-classesDb.init();  // Initialize classes database
+// Import all models
+const classesDAO = require("../models/classesModel");
+const classesDb = new classesDAO("./data/classes.db");
+classesDb.init();
 
-const Courses = require("../models/coursesModel");
-const coursesDb = new Courses("courses.db");
+const coursesDAO = require("../models/coursesModel");
+const coursesDb = new coursesDAO("./data/courses.db");
 coursesDb.init();
 
-const BookedClasses = require("../models/bookedClassesModel");
-const bookedClassesDb = new BookedClasses("bookedClasses.db");
+const bookedClassesDAO = require("../models/bookedClassesModel");
+const bookedClassesDb = new bookedClassesDAO("./data/bookedClasses.db");
 bookedClassesDb.init();
 
-const BookedCourses = require("../models/bookedCoursesModel");
-const bookedCoursesDb = new BookedCourses("bookedCourses.db");
+const bookedCoursesDAO = require("../models/bookedCoursesModel");
+const bookedCoursesDb = new bookedCoursesDAO("./data/bookedCourses.db");
 bookedCoursesDb.init();
 
-const Users = require("../models/usersModel");
-const usersDb = new Users("users.db");
+const usersDAO = require("../models/usersModel");
+const usersDb = new usersDAO("./data/users.db");
 usersDb.init();
+
+
 
 
 // === Static Pages ===
