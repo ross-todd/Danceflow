@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100"> <!-- Light gray background for the entire screen -->
+
+  <!-- header partial -->
+  {{> header}}
+
+  <!-- Register SECTION -->
+  <div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div class="max-w-lg w-full bg-white rounded-xl shadow-lg p-12"> <!-- Same container structure as login -->
+      <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Sign up</h2> <!-- Sign up heading -->
+
+      <!-- Register Form -->
+      <form class="space-y-6"action="/register" method="POST" autocomplete="off">
+        <div class="grid sm:grid-cols-2 gap-8">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+            <input
+              type="text"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+              placeholder="Enter first name"
+              name="fname" required
+              aria-label="First Name"
+              autocomplete="off"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+            <input
+              type="text"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+              placeholder="Enter last name"
+              name="lname" required
+              aria-label="Last Name"
+              autocomplete="off"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <input
+              type="text"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+              placeholder="Enter email"
+              name="email" required
+              aria-label="Email Id"
+              autocomplete="off"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Mobile No.</label>
+            <input
+              type="tel"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+              placeholder="Enter mobile number"
+              name="mobile" required
+              aria-label="Mobile No."
+              autocomplete="off"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <input
+              type="password"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+              placeholder="Enter password"
+              name="password" required
+              aria-label="Password"
+              autocomplete="off"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+            <input
+              type="password"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+              placeholder="Confirm password"
+              name="confirmPassword" required
+              aria-label="Confirm Password"
+              autocomplete="off"
+            />
+          </div>
+        </div>
+
+        <!-- Password validation error message -->
+        {{#error}}
+          <div class="col-span-2 text-red-600 text-lg font-bold mt-4 text-center">
+            {{error}}
+          </div>
+        {{/error}}
+        {{#success}}
+        <div class="col-span-2 text-green-600 text-lg font-bold mt-4 text-center">
+        {{success}}
+        </div>
+        {{/success}}
+
+        <div class="mt-12 flex justify-center">
+          <button type="submit" class="inline-block w-48 text-center py-4 px-6 bg-[#a87c9c] hover:bg-[#c69fb8] text-white font-medium rounded-md">
+            Sign up
+          </button>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

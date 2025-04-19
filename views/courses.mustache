@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white h-screen flex flex-col">
+
+  <!-- header partial -->
+  {{> header}}
+
+  <!-- COURSES SECTION -->
+  <div id="courses-section" class="bg-gray-50 pt-4 sm:pt-8 lg:pt-24 px-4 sm:px-6 lg:px-8 flex-grow flex flex-col justify-center items-center mt-0 sm:mt-2">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+
+      <!-- Include courses partials -->
+      {{> coursesSection }}
+
+      <!-- Course Booking Form -->
+       <div class="bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-md mx-auto">
+        <div class="text-2xl py-4 px-6 bg-[#a87c9c] text-white text-center">
+          Book a Course
+        </div>
+        <form class="py-4 px-6 space-y-4" method="POST" action="/process-course-bookings">
+
+          <!-- Name -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="name">Name</label>
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="name" name="name" type="text" placeholder="Enter your name" required>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="email">Email</label>
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="email" name="email" type="email" placeholder="Enter your email" required>
+          </div>
+
+          <!-- Course Dropdown -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="course">Course</label>
+            <select class="shadow border rounded w-full py-2 px-3 text-gray-700" id="course" name="course" required>
+              <option value="">Select a course</option>
+              {{#courses}}
+                <option value="{{_id}}" data-name="{{name}}" data-month="{{month}}" data-location="{{location}}" data-schedule="{{schedule}}" data-price="{{price}}">
+                  {{name}}
+                </option>
+              {{/courses}}
+            </select>
+          </div>
+          <div class="mb-4">
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="courseName" name="courseName" type="hidden" value="" readonly>
+          </div>
+
+          <!-- Month -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="month">Month</label>
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="month" name="month" type="text" value="" readonly>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-bold mb-2" for="location">Location</label>
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="location" name="location" type="text" value="" readonly>
+          </div>
+
+          <!-- Schedule -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="schedule">Schedule</label>
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="schedule" name="schedule" type="text" value="" readonly>
+          </div>
+
+          <!-- Price  -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="price">Price</label>
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="price" name="price" type="text" value="" readonly>
+          </div>
+
+          <!-- Success and Error Messages -->
+          {{#successMessage}}
+            <div class="alert alert-success text-green-600 bg-green-100 border border-green-300 rounded p-3 mb-4">
+              {{successMessage}}
+            </div>
+          {{/successMessage}}
+
+          {{#errorMessage}}
+            <div class="alert alert-danger text-red-600 bg-red-100 border border-red-300 rounded p-3 mb-4">
+              {{errorMessage}}
+            </div>
+          {{/errorMessage}}
+
+          <!-- Submit Button -->
+          <div class="flex items-center justify-center mb-4">
+            <button class="bg-black text-white py-2 px-4 rounded hover:bg-gray-800" type="submit">Book</button>
+          </div>
+          <p id="booking-message" style="text-align: center; font-weight: bold; font-size: 20px;"></p>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- footer partial -->
+  {{> footer}}
+
+  <!-- Javascript for populating form data -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const courseDropdown = document.getElementById('course');
+      const courseNameInput = document.getElementById('courseName');  
+      const monthInput = document.getElementById('month');
+      const locationInput = document.getElementById('location');
+      const scheduleInput = document.getElementById('schedule');
+      const priceInput = document.getElementById('price');
+      const form = document.querySelector("form");
+
+      courseDropdown.addEventListener('change', function() {
+        const selectedOption = courseDropdown.options[courseDropdown.selectedIndex];
+
+        if (selectedOption.value) {
+          const courseName = selectedOption.getAttribute('data-name');
+          const courseMonth = selectedOption.getAttribute('data-month');
+          const courseLocation = selectedOption.getAttribute('data-location');
+          const courseSchedule = selectedOption.getAttribute('data-schedule');
+          const coursePrice = selectedOption.getAttribute('data-price');
+
+          // Populate the fields
+          courseNameInput.value = courseName; 
+          monthInput.value = courseMonth;
+          locationInput.value = courseLocation
+          scheduleInput.value = courseSchedule;
+          priceInput.value = coursePrice;
+        } else {
+          // Clear the fields if no course is selected
+          courseNameInput.value = '';
+          monthInput.value = '';
+          locationInput.value = '';
+          scheduleInput.value = '';
+          priceInput.value = '';
+        }
+      });
+
+      form.addEventListener("submit", function(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(form); // Get form data
+        const data = Object.fromEntries(formData.entries()); // Convert FormData to an object
+
+        fetch("/process-course-bookings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json" // Send as JSON
+            },
+            body: JSON.stringify(data) // Convert object to JSON
+        })
+        .then(res => res.json()) // Parse the JSON response
+        .then(result => {
+            const msgEl = document.getElementById("booking-message"); // Get message element
+            msgEl.textContent = result.message; // Display the result message
+            msgEl.style.color = result.success ? "green" : "red"; // Style the message based on success or error
+        })
+        .catch(error => {
+            console.error('Error:', error); // Log any errors
+            alert('There was an error with the booking process.');
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

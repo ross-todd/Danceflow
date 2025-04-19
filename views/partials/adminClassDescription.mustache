@@ -1,0 +1,73 @@
+<div class="mt-12 py-8">
+  <div class="container mx-auto px-4">
+    <div class="container mx-auto px-6 p-4">
+      <h2 class="text-4xl font-bold text-gray-800 text-center mb-6">Class Descriptions</h2>
+    </div>
+
+    <!-- Add class -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <h3 class="text-2xl font-semibold text-gray-800 text-center mb-4">Add Class</h3>
+        <form method="POST" action="/admin/add-class">
+          <div class="mb-4">
+            <label class="block text-gray-700" for="newTitle">Title</label>
+            <input class="w-full p-2 border border-gray-300 rounded" type="text" id="newTitle" name="title" required>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700" for="newDescription">Description</label>
+            <textarea class="w-full p-2 border border-gray-300 rounded" id="newDescription" name="description" rows="3" required></textarea>
+          </div>
+          <div class="flex justify-between">
+            <button class="bg-gray-400 text-white p-2 rounded" type="reset">Reset</button>
+            <button class="bg-green-500 text-white p-2 rounded" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Update Class -->
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <h3 class="text-2xl font-semibold text-gray-800 text-center mb-4">Update Class</h3>
+        <form method="POST" action="/admin/update-class">
+          <div class="mb-4">
+            <label class="block text-gray-700" for="updateClassId">Select</label>
+            <select class="w-full p-2 border border-gray-300 rounded" id="updateClassId" name="classId" required>
+              <option value="">-- Select Class --</option>
+              <option value="ballet">Ballet</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700" for="updateDescription">New Description</label>
+            <textarea class="w-full p-2 border border-gray-300 rounded" id="updateDescription" name="description" rows="3" required></textarea>
+          </div>
+          <div class="flex justify-between">
+            <button class="bg-gray-400 text-white p-2 rounded" type="reset">Cancel</button>
+            <button class="bg-yellow-500 text-white p-2 rounded" type="submit">Update</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Delete Class -->
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <h3 class="text-2xl font-semibold text-gray-800 text-center mb-4">Delete Class</h3>
+        <form method="POST" action="/admin/delete-class">
+          <div class="mb-4">
+            <label class="block text-gray-700" for="deleteClassId">Select</label>
+            <select class="w-full p-2 border border-gray-300 rounded" id="deleteClassId" name="classId" required>
+              <option value="">-- Select Class --</option>
+              <option value="zumba">Zumba</option>
+            </select>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700" for="updateDescription">New Description</label>
+            <textarea class="w-full p-2 border border-gray-300 rounded" id="updateDescription" name="description" rows="3" required></textarea>
+          </div>
+          <div class="flex justify-between">
+            <button class="bg-gray-400 text-white p-2 rounded" type="reset">Cancel</button>
+            <button class="bg-red-500 text-white p-2 rounded" type="submit">Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

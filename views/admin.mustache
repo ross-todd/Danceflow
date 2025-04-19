@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Admin Panel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+  {{> header}}
+
+  <!-- Main content wrapper -->
+  <main class="flex-grow">
+    <!-- Heading -->
+    <header class="py-16 bg-white-200">
+      <div class="w-full text-center">
+        <div class="bg-white rounded-none shadow-lg p-8 w-full">
+          <h1 class="text-5xl font-bold text-gray-800">Admin Section</h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- Sections - Split into partials folder as file was becoming too big-->
+    <section>
+      {{> adminClasses }}
+    </section>
+
+    <section>
+      {{> adminCourses }}
+    </section>
+
+    <section>
+      {{> adminBookings }}
+    </section>
+
+    <!-- Seperate section on th eadmin panel. Only managers can add, update, or delete other users -->
+    {{#isManagerOnly}}
+      <section>
+        {{> adminOrganisers }}
+      </section>
+    {{/isManagerOnly}}
+  </main>
+
+  <!-- Footer partial-->
+  {{> footer}}
+</body>
+
+</html>

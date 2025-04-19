@@ -1,0 +1,300 @@
+<!-- Main Section -->
+    <div class="py-8">
+      <div class="container mx-auto px-4 mt-10">
+        <div class="container mx-auto px-6 p-4">
+          <h2 class="text-4xl font-bold text-gray-800 text-center">Courses</h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Add New Course -->
+          <div class="bg-white shadow-lg rounded-lg p-6">
+            <div class="text-center mb-4">
+              <h2 class="text-2xl font-semibold text-gray-800">Add New Course</h2>
+            </div>
+            <form method="POST" role="form" action="/admin/addCourse">
+              <div class="mb-4">
+                <label class="block text-gray-700" for="addCourseName">Name</label>
+                <input class="w-full p-2 border border-gray-300 rounded" type="text" id="addName" name="name" required>
+                {{#courseErrors.name}}
+                <p class="text-red-500 text-sm mt-1">{{courseErrors.name}}</p>
+              {{/courseErrors.name}}
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700" for="addCourseDescription">Description</label>
+                <textarea class="w-full p-2 border border-gray-300 rounded" id="addCourseDescription" name="description" placeholder="Enter course description" required></textarea>
+                {{#courseErrors.description}}
+                <p class="text-red-500 text-sm mt-1">{{courseErrors.description}}</p>
+              {{/courseErrors.description}}
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700" for="addCourseMonth">Month</label>
+                <select class="w-full p-2 border border-gray-300 rounded" id="addMonth" name="month" required>
+                  <option value="">Select a Month</option>
+                  <option>Jan - Mar</option>
+                  <option>Apr - Jun</option>
+                  <option>Jul - Sep</option>
+                  <option>Oct - Dec</option>
+                </select>
+              </div>
+              <div class="mb-4">
+              <label class="block text-gray-700" for="addCourseLocation">Location</label>
+              <select class="w-full p-2 border border-gray-300 rounded" type="text" id="addCourseLocation" name="location" required>
+                <option value="">Select a Location</option>
+                  <option>Caladonian University</option>
+                  <option>University of Glasgow</option>
+                  <option>Strathclyde University</option>
+              </select>
+            </div>
+              <div class="mb-4">
+                <label class="block text-gray-700" for="addCourseSchedule">Schedule</label>
+                <input class="w-full p-2 border border-gray-300 rounded" type="text" id="addSchedule" name="schedule" placeholder="Enter schedule" required>
+                {{#courseErrors.description}}
+                <p class="text-red-500 text-sm mt-1">{{courseErrors.description}}</p>
+              {{/courseErrors.description}}
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700" for="addCoursePrice">Price</label>
+                <select class="w-full p-2 border border-gray-300 rounded" id="addPrice" name="price" required>
+                  <option value="">Select a Price</option>
+                  <option>£50</option>
+                  <option>£75</option>
+                  <option>£100</option>
+                  <option>£125</option>
+                  <option>£150</option>
+                  <option>£175</option>
+                  <option>£200</option>
+                  <option>£225</option>
+                  <option>£250</option>
+                </select>
+              </div>
+              <div class="flex justify-between">
+                <button class="bg-blue-500 text-white p-2 rounded" type="button" onclick="window.location.href='/admin';">Reset</button>
+                <button class="bg-green-500 text-white p-2 rounded" type="submit">Submit</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Update Course -->
+          <div class="bg-white shadow-lg rounded-lg p-6">
+            <div class="text-center mb-4">
+              <h2 class="text-2xl font-semibold text-gray-800">Update Course</h2>
+            </div>
+            <form method="POST" role="form" action="/admin/updateCourse">
+              <div class="mb-4">
+                <label class="block text-gray-700" for="courseId">Name</label>
+                <select id="courseDropdown" name="courseId" onchange="populateCourseData()" class="w-full p-2 border border-gray-300 rounded">
+                  <option value="">Select a Course</option>
+                  {{#courseOptions}}
+                  <option value="{{_id}}">{{name}}</option>
+                  {{/courseOptions}}
+                </select>
+              </div>
+              <input type="hidden" id="updateCourseID" name="id">
+              <input type="hidden" id="updateCourseName" name="name" required>
+              <div class="mb-4">
+                <label class="block text-gray-700" for="updateCourseDescription">Description</label>
+                <textarea class="w-full p-2 border border-gray-300 rounded" id="updateCourseDescription" name="description" placeholder="Enter course description" required></textarea>
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700" for="updateCourseMonth">Month</label>
+                <select class="w-full p-2 border border-gray-300 rounded" id="updateCourseMonth" name="month" required>
+                  <option value="">Select a Month</option>
+                  <option>Jan - Mar</option>
+                  <option>Apr - Jun</option>
+                  <option>Jul - Sep</option>
+                  <option>Oct - Dec</option>
+                </select>
+              </div>
+              <div class="mb-4">
+              <label class="block text-gray-700" for="updateCourseLocation">Location</label>
+              <select class="w-full p-2 border border-gray-300 rounded" type="text" id="updateCourseLocation" name="location" placeholder="Select a Location" required>
+                <option value="">Select a Location</option>
+                  <option>Caladonian University</option>
+                  <option>University of Glasgow</option>
+                  <option>Strathclyde University</option>
+              </select>
+            </div>
+              <div class="mb-4">
+                <label class="block text-gray-700" for="updateCourseSchedule">Schedule</label>
+                <input class="w-full p-2 border border-gray-300 rounded" type="text" id="updateCourseSchedule" name="schedule" placeholder="Enter schedule" required>
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700" for="updateCoursePrice">Price</label>
+                <select class="w-full p-2 border border-gray-300 rounded" id="updateCoursePrice" name="price" required>
+                  <option value="">Select a Price</option>
+                  <option>£50</option>
+                  <option>£75</option>
+                  <option>£100</option>
+                  <option>£125</option>
+                  <option>£150</option>
+                  <option>£175</option>
+                  <option>£200</option>
+                  <option>£225</option>
+                  <option>£250</option>
+                </select>
+              </div>
+              <div class="flex justify-between">
+                <button class="bg-blue-500 text-white p-2 rounded" type="reset">Cancel</button>
+                <button class="bg-green-500 text-white p-2 rounded" type="submit">Update</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Delete Course -->
+          <div class="bg-white shadow-lg rounded-lg p-6">
+            <div class="text-center mb-4">
+              <h2 class="text-2xl font-semibold text-gray-800">Delete Course</h2>
+            </div>
+            <form method="POST" role="form" action="/admin/deleteCourse">
+              <div class="mb-4">
+                <label class="block text-gray-700" for="ID">Name</label>
+                <select id="deleteCourseDropdown" onchange="populateCourseDataDelete()" class="w-full p-2 border border-gray-300 rounded" required>
+                  <option value="">Select a Course</option>
+                  {{#courseOptions}}
+                  <option value="{{_id}}">{{name}}</option>
+                  {{/courseOptions}}
+                </select>
+              </div>
+              <div class="mb-4">
+              <label class="block text-gray-700 hidden" for="deleteCourseID">Course ID</label>
+              <input class="w-full p-2 border border-gray-300 rounded" type="hidden" id="deleteCourseID" name="id" required readonly>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 hidden" for="deleteCourseName">Course Name</label>
+              <input class="w-full p-2 border border-gray-300 rounded" type="hidden" id="deleteCourseName" name="name" required readonly>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700" for="deleteCourseDescription">Description</label>
+              <textarea class="w-full p-2 border border-gray-300 rounded" id="deleteCourseDescription" name="description" readonly></textarea>
+          </div>
+              <div class="mb-4">
+                <label class="block text-gray-700" for="deleteCourseDay">Month</label>
+                <input class="w-full p-2 border border-gray-300 rounded" type="text" id="deleteCourseMonth" name="month" required readonly>
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700" for="deleteCourseLocation">Location</label>
+                <input class="w-full p-2 border border-gray-300 rounded" type="text" id="deleteCourseLocation" name="location" required readonly>
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700" for="deleteCourseTime">Schedule</label>
+                <input class="w-full p-2 border border-gray-300 rounded" type="text" id="deleteCourseSchedule" name="schedule" required readonly>
+              </div>
+              <div class="mb-4">
+                <label class="block text-gray-700" for="deleteCoursePrice">Price</label>
+                <input class="w-full p-2 border border-gray-300 rounded" type="text" id="deleteCoursePrice" name="price" required readonly>
+              </div>
+              <div class="flex justify-between">
+                <button class="bg-blue-500 text-white p-2 rounded" type="reset">Cancel</button>
+                <button class="bg-red-500 text-white p-2 rounded" type="submit">Delete</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Show All Courses Section -->
+    <div class="container mx-auto px-4 pb-8">
+      <!-- Show All Courses Button -->
+      <div class="bg-white shadow-lg rounded-lg p-6 max-w-5xl mx-auto mb-4">
+        <div class="text-center mb-4">
+          <h2 class="text-2xl font-semibold text-gray-800">Show All Courses</h2>
+        </div>
+        <div class="flex justify-center">
+          <button id="showCoursesBtn" type="button" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">View</button>
+        </div>
+      </div>
+
+      <!-- Courses Table -->
+      <div id="coursesTable" class="hidden max-w-5xl mx-auto">
+        <table class="min-w-full table-auto border border-gray-300">
+          <thead>
+            <tr>
+              <th class="border px-4 py-2 text-left">Name</th>
+              <th class="border px-4 py-2 text-left">Month</th>
+              <th class="border px-4 py-2 text-left">Location</th>
+              <th class="border px-4 py-2 text-left">Schedule</th>
+              <th class="border px-4 py-2 text-left">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#courseOptions}}
+            <tr>
+              <td class="border px-4 py-2">{{name}}</td>
+              <td class="border px-4 py-2">{{month}}</td>
+              <td class="border px-4 py-2">{{location}}</td>
+              <td class="border px-4 py-2">{{schedule}}</td>
+              <td class="border px-4 py-2">{{price}}</td>
+            </tr>
+            {{/courseOptions}}
+            {{^courseOptions}}
+          <tr>
+            <td colspan="4" class="text-center py-4 text-gray-500">No courses available.</td>
+          </tr>
+          {{/courseOptions}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+    <!-- Javascript for populating form data -->
+  <script>
+  // Populate course form
+  function populateCourseData() {
+    const courseId = document.getElementById('courseDropdown').value;
+    if (courseId) {
+      fetch(`/course/${courseId}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('updateCourseID').value = data._id;
+          document.getElementById('updateCourseName').value = data.name;
+          document.getElementById('updateCourseDescription').value = data.description;
+          document.getElementById('updateCourseMonth').value = data.month;
+          document.getElementById('updateCourseLocation').value = data.location;
+          document.getElementById('updateCourseSchedule').value = data.schedule;
+          document.getElementById('updateCoursePrice').value = data.price;
+        });
+    }
+  }
+
+  // Populate Delete Course form
+  function populateCourseDataDelete() {
+    const courseId = document.getElementById('deleteCourseDropdown').value;
+    if (courseId) {
+      fetch(`/course/${courseId}`)
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('deleteCourseID').value = data._id;
+          document.getElementById('deleteCourseName').value = data.name;
+          document.getElementById('deleteCourseDescription').value = data.description;
+          document.getElementById('deleteCourseMonth').value = data.month;
+          document.getElementById('updateCourseLocation').value = data.location;
+          document.getElementById('deleteCourseSchedule').value = data.schedule;
+          document.getElementById('deleteCoursePrice').value = data.price;
+        });
+    }
+  }
+
+  // Toggle course table visibility
+  document.getElementById('showCoursesBtn').addEventListener('click', () => {
+    const table = document.getElementById('coursesTable');
+    const button = document.getElementById('showCoursesBtn');
+    table.classList.toggle('hidden'); // Toggle visibility
+
+    // Change button text and styling based on table visibility
+    if (table.classList.contains('hidden')) {
+      button.textContent = 'View'; // Reset to 'View'
+      button.classList.remove('bg-yellow-500', 'hover:bg-yellow-600'); // Remove yellow
+      button.classList.add('bg-blue-500', 'hover:bg-blue-600'); // Add blue
+    } else {
+      button.textContent = 'Hide'; // Change to 'Hide'
+      button.classList.remove('bg-blue-500', 'hover:bg-blue-600'); // Remove blue
+      button.classList.add('bg-yellow-500', 'hover:bg-yellow-600'); // Add yellow
+    }
+  });
+</script>
+
+
+
+  

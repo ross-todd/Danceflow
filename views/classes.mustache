@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white h-screen flex flex-col">
+
+  <!-- header partial -->
+  {{> header}}
+
+  <!-- CLASSES SECTION -->
+  <div id="classes-section" class="bg-gray-50 pt-4 sm:pt-8 lg:pt-24 px-4 sm:px-6 lg:px-8 flex-grow flex flex-col justify-center items-center mt-0 sm:mt-2">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+
+      <!-- Include classes partial -->
+      {{> classesSection }}
+
+      <!-- Appointment Booking Form -->
+      <div class="bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-md mx-auto">
+        <div class="text-2xl py-4 px-6 bg-[#a87c9c] text-white text-center">
+          Book a Class
+        </div>
+        <form class="py-4 px-6 space-y-4" method="POST" action="/process-class-bookings">
+
+          <!-- Name -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="name">Name</label>
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="name" name="name" type="text" placeholder="Enter your name" required>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="email">Email</label>
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="email" name="email" type="email" placeholder="Enter your email" required>
+          </div>
+
+          <!-- Class Option Dropdown -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="classDropdown">Class</label>
+            <select class="shadow border rounded w-full py-2 px-3 text-gray-700" id="classDropdown" required>
+              <option value="">Select a class</option>
+              {{#classes}}
+                <option value="{{_id}}" data-name="{{name}}" data-day="{{day}}" data-location="{{location}}" data-time="{{time}}" data-price="{{price}}">
+                  {{name}}
+                </option>
+              {{/classes}}
+            </select>
+          </div>
+
+          <!-- Class (read-only input) -->
+          <div class="mb-4">
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="className" name="className" type="hidden" value="" readonly>
+          </div>
+
+          <!-- Day (read-only input) -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="day">Day</label>
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="day" name="day" type="text" value="" readonly>
+          </div>
+
+          <!-- Location (read-only input) -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="location">Location</label>
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="location" name="location" type="text" value="" readonly>
+          </div>
+
+          <!-- Time (read-only input) -->
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="time">Time</label>
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="time" name="time" type="text" value="" readonly>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="price">Price</label>
+            <input class="shadow border rounded w-full py-2 px-3 text-gray-700" id="price" name="price" type="text" value="" readonly>
+          </div>
+
+          {{#successMessage}}
+              <div class="alert alert-success">
+                  {{successMessage}}
+              </div>
+          {{/successMessage}}
+
+          {{#errorMessage}}
+              <div class="alert alert-danger">
+                  {{errorMessage}}
+              </div>
+          {{/errorMessage}}
+
+          <!-- Submit Button -->
+          <div class="flex items-center justify-center mb-4">
+            <button class="bg-black text-white py-2 px-4 rounded hover:bg-gray-800" type="submit">Book</button>
+          </div>
+
+          <p id="booking-message" style="text-align: center; font-weight: bold; font-size: 20px;"></p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- footer partial -->
+  {{> footer}}
+
+  <!-- Javascript for populating form data -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const classDropdown = document.getElementById('classDropdown');
+    const classNameInput = document.getElementById('className');
+    const dayInput = document.getElementById('day');
+    const locationInput = document.getElementById('location');
+    const timeInput = document.getElementById('time');
+    const priceInput = document.getElementById('price');
+    const form = document.querySelector("form");
+    const msgEl = document.getElementById("booking-message");
+
+    // Populates hidden and read-only fields when a class is selected
+    classDropdown.addEventListener('change', function () {
+        const selectedOption = classDropdown.options[classDropdown.selectedIndex];
+        if (selectedOption.value) {
+            classNameInput.value = selectedOption.getAttribute('data-name');
+            dayInput.value = selectedOption.getAttribute('data-day');
+            locationInput.value = selectedOption.getAttribute('data-location');
+            timeInput.value = selectedOption.getAttribute('data-time');
+            priceInput.value = selectedOption.getAttribute('data-price');
+        } else {
+            classNameInput.value = '';
+            dayInput.value = '';
+            locationInput.value = '';
+            timeInput.value = '';
+            priceInput.value = '';
+        }
+    });
+
+    // Check login before the user can proceed with booking
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+        
+        // Send the form data if everything is valid
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        fetch("/process-class-bookings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json" // Send as JSON
+            },
+            body: JSON.stringify(data) // Convert object to JSON
+        })
+        .then(res => res.json()) // Parse the JSON response
+        .then(result => {
+            const msgEl = document.getElementById("booking-message"); // Get message element
+            msgEl.textContent = result.message; // Display the result message
+            msgEl.style.color = result.success ? "green" : "red"; // Style the message based on success or error
+
+        })
+        .catch(error => {
+            console.error('Error:', error); // Log any errors
+            alert('There was an error with the booking process.');
+        });
+      });
+
+      // Get token from cookie (using js-cookie)
+        const token = Cookies.get('jwt');  // Using js-cookie to retrieve the JWT
+
+        // If no token is found, prompt the user to log in
+        if (!token) {
+            e.preventDefault(); // Stop form submission
+            alert("Please log in to book a class.");
+            window.location.href = "/login"; // Redirect to login page
+            return;
+        }
+    });
+
+</script>
+
+</body>
+</html>

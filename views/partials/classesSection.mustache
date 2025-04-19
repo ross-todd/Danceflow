@@ -1,0 +1,64 @@
+<div class="bg-white shadow-lg rounded-lg p-6">
+  <h1 class="text-2xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-black mb-4 text-center">Classes</h1>
+  
+  <!-- Desktop/Table Layout (hidden on mobile) -->
+  <div class="hidden sm:block">
+    <table class="min-w-full bg-white border-collapse text-lg text-left text-gray-500 table-auto w-full">
+      <thead>
+        <tr>
+          <th class="px-6 py-4 border-b text-gray-900">Day</th>
+          <th class="px-6 py-4 border-b text-gray-900">Location</th>
+          <th class="px-6 py-4 border-b text-gray-900">Class</th>
+          <th class="px-6 py-4 border-b text-gray-900">Time</th>
+          <th class="px-6 py-4 border-b text-gray-900">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#classes}}
+          <tr>
+            <td class="px-6 py-4 border-b-0 text-gray-900">{{day}}</td>
+            <td class="px-6 py-4 border-b-0 text-gray-900">{{location}}</td>
+            <td class="px-6 py-4 border-b-0 text-gray-900">{{name}}</td>
+            <td class="px-6 py-4 border-b-0 text-gray-900 whitespace-nowrap">{{time}}</td>
+            <td class="px-6 py-4 border-b-0 text-gray-900">{{price}}</td>
+          </tr>
+          <!-- Description row with no border above but border below -->
+          <tr>
+            <td colspan="5" class="px-6 py-2 text-gray-700 border-b">
+              {{description}}
+            </td>
+          </tr>
+          <!-- Book Class Button Row -->
+          <tr>
+            <td colspan="5" class="px-6 py-4 text-center">
+              {{#showButton}}
+                <a href="/classes" class="inline-block w-40 text-center py-3 px-4 bg-[#a87c9c] hover:bg-[#c69fb8] text-white font-medium rounded-md">
+                  Book a Class
+                </a>
+              {{/showButton}}
+            </td>
+          </tr>
+        {{/classes}}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mobile View with Stacked Layout (hidden on larger screens) -->
+  <div class="sm:hidden">
+    {{#classes}}
+      <div class="bg-white shadow-lg rounded-lg p-4 mb-4">
+        <h4 class="text-lg font-semibold">{{name}}</h4>
+        <p><strong>Day:</strong> {{day}}</p>
+        <p><strong>Location:</strong> {{location}}</p>
+        <p><strong>Time:</strong> {{time}}</p>
+        <p><strong>Price:</strong> {{price}}</p>
+        <p><strong>Description:</strong> {{description}}</p>
+        {{#showButton}}
+          <a href="/classes" class="inline-block w-full text-center py-3 px-4 bg-[#a87c9c] hover:bg-[#c69fb8] text-white font-medium rounded-md">
+            Book a Class
+          </a>
+        {{/showButton}}
+      </div>
+    {{/classes}}
+  </div>
+</div>

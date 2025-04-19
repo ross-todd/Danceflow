@@ -1,0 +1,308 @@
+<!-- Main Section -->
+  <div class="py-8">
+    <div class="container mx-auto px-4 ">
+      <div class="container mx-auto px-6 p-4">
+        <h2 class="text-4xl font-bold text-gray-800 text-center">Classes</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Add New Class -->
+        <div class="bg-white shadow-lg rounded-lg p-6">
+          <div class="text-center mb-4">
+            <h2 class="text-2xl font-semibold text-gray-800">Add New Class</h2>
+          </div>
+          <form method="POST" role="form" action="/admin/addClass">
+            <div class="mb-4">
+              <label class="block text-gray-700" for="addName">Name</label>
+              <input class="w-full p-2 border border-gray-300 rounded" type="text" id="addName" name="name" required>
+              {{#classErrors.name}}
+                <p class="text-red-500 text-sm mt-1">{{classErrors.name}}</p>
+              {{/classErrors.name}}
+              </div>
+            <div class="mb-4">
+            <label class="block text-gray-700" for="addDescription">Description</label>
+              <textarea class="w-full p-2 border border-gray-300 rounded" id="addDescription" name="description" required></textarea>
+              {{#classErrors.description}}
+                <p class="text-red-500 text-sm mt-1">{{classErrors.description}}</p>
+              {{/classErrors.description}}
+          </div>
+            <div class="mb-4">
+              <label class="block text-gray-700" for="addDay">Day</label>
+              <select class="w-full p-2 border border-gray-300 rounded" id="addDay" name="day" required>
+                <option value="">Select a Day</option>
+                <option>Monday</option>
+                <option>Tuesday</option>
+                <option>Wednesday</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+                <option>Saturday</option>
+                <option>Sunday</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700" for="addLocation">Location</label>
+              <select class="w-full p-2 border border-gray-300 rounded" type="text" id="updateLocation" name="location" required>
+                <option value="">Select a Location</option>
+                  <option>Caladonian University</option>
+                  <option>University of Glasgow</option>
+                  <option>Strathclyde University</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700" for="addTime">Time</label>
+              <select class="w-full p-2 border border-gray-300 rounded" id="addTime" name="time" required>
+                <option value="">Select a Time</option>
+                <option>09:00 - 10:30</option>
+                <option>10:30 - 12:00</option>
+                <option>12:00 - 13:30</option>
+                <option>13:30 - 15:00</option>
+                <option>15:30 - 17:00</option>
+                <option>17:00 - 18:30</option>
+                <option>18:30 - 20:00</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700" for="addPrice">Price</label>
+              <select class="w-full p-2 border border-gray-300 rounded" id="addPrice" name="price" required>
+                <option value="">Select a Price</option>
+                <option>£15</option>
+                <option>£20</option>
+                <option>£25</option>
+              </select>
+            </div>
+            <div class="flex justify-between">
+              <button class="bg-blue-500 text-white p-2 rounded" type="button" onclick="window.location.href='/admin';">Reset</button>
+              <button class="bg-green-500 text-white p-2 rounded" type="submit" value="Post entry">Submit</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Update Class -->
+        <div class="bg-white shadow-lg rounded-lg p-6">
+          <div class="text-center mb-4">
+            <h2 class="text-2xl font-semibold text-gray-800">Update Class</h2>
+          </div>
+          <form method="POST" role="form" action="/admin/updateClass">
+            <div class="mb-4">
+              <label class="block text-gray-700" for="classId">Name</label>
+              <select id="classDropdown" name="classId" onchange="populateClassData()" class="w-full p-2 border border-gray-300 rounded" required>
+                <option value="">Select a Class</option>
+                {{#classOptions}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/classOptions}}
+              </select>
+            </div>
+            <input type="hidden" id="updateClassID" name="id" required>
+            <input type="hidden" id="updateClassName" name="name" required>
+
+            <div class="mb-4">
+              <label class="block text-gray-700" for="updateClassDescription">Description</label>
+              <textarea class="w-full p-2 border border-gray-300 rounded" id="updateClassDescription" name="description" required></textarea>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-gray-700" for="updateClassDay">Day</label>
+              <select class="w-full p-2 border border-gray-300 rounded" id="updateClassDay" name="day" required>
+                <option value="">Select a Day</option>
+                <option>Monday</option>
+                <option>Tuesday</option>
+                <option>Wednesday</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+                <option>Saturday</option>
+                <option>Sunday</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700" for="updateClassLocation">Location</label>
+              <select class="w-full p-2 border border-gray-300 rounded" type="text" id="updateClassLocation" name="location" required>
+                <option value="">Select a Location</option>
+                  <option>Caladonian University</option>
+                  <option>University of Glasgow</option>
+                  <option>Strathclyde University</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700" for="updateClassTime">Time</label>
+              <select class="w-full p-2 border border-gray-300 rounded" id="updateClassTime" name="time" required>
+                <option value="">Select a Time</option>
+                <option>09:00 - 10:30</option>
+                <option>10:30 - 12:00</option>
+                <option>12:00 - 13:30</option>
+                <option>13:30 - 15:00</option>
+                <option>15:30 - 17:00</option>
+                <option>17:00 - 18:30</option>
+                <option>18:30 - 20:00</option>
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700" for="updateClassPrice">Price</label>
+              <select class="w-full p-2 border border-gray-300 rounded" id="updateClassPrice" name="price" required>
+                <option value="">Select a Price</option>
+                <option>£15</option>
+                <option>£20</option>
+                <option>£25</option>
+              </select>
+            </div>
+            <div class="flex justify-between">
+              <button class="bg-blue-500 text-white p-2 rounded" type="reset">Cancel</button>
+              <button class="bg-green-500 text-white p-2 rounded" type="submit">Update</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Delete Class -->
+        <div class="bg-white shadow-lg rounded-lg p-6">
+          <div class="text-center mb-4">
+            <h2 class="text-2xl font-semibold text-gray-800">Delete Class</h2>
+          </div>
+          <form method="POST" role="form" action="/admin/deleteClass">
+            <div class="mb-4">
+              <label class="block text-gray-700" for="deleteClassDropdown">Select a Class</label>
+              <select id="deleteClassDropdown" name="classId" onchange="populateClassDataDelete()" class="w-full p-2 border border-gray-300 rounded" required>
+                <option value="">Select a Class</option>
+                {{#classOptions}}
+                <option value="{{_id}}">{{name}}</option>
+                {{/classOptions}}
+              </select>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 hidden" for="deleteClassID">Class ID</label>
+              <input class="w-full p-2 border border-gray-300 rounded" type="hidden" id="deleteClassID" name="id" required readonly>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700 hidden" for="deleteClassName">Class Name</label>
+              <input class="w-full p-2 border border-gray-300 rounded" type="hidden" id="deleteClassName" name="name" required readonly>
+            </div>
+
+            <div class="mb-4">
+              <label class="block text-gray-700" for="deleteClassDescription">Description</label>
+              <textarea class="w-full p-2 border border-gray-300 rounded" type="text" id="deleteClassDescription" name="description" required readonly></textarea>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700" for="deleteClassDay">Day</label>
+              <input class="w-full p-2 border border-gray-300 rounded" type="text" id="deleteClassDay" name="day" required readonly>
+            </div>
+             <div class="mb-4">
+              <label class="block text-gray-700" for="deleteClassLocation">Location</label>
+              <input class="w-full p-2 border border-gray-300 rounded" type="text" id="deleteClassLocation" name="location" required readonly>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700" for="deleteClassTime">Time</label>
+              <input class="w-full p-2 border border-gray-300 rounded" type="text" id="deleteClassTime" name="time" required readonly>
+            </div>
+            <div class="mb-4">
+              <label class="block text-gray-700" for="deleteClassPrice">Price</label>
+              <input class="w-full p-2 border border-gray-300 rounded" type="text" id="deleteClassPrice" name="price" required readonly>
+            </div>
+            <div class="flex justify-between">
+              <button class="bg-blue-500 text-white p-2 rounded" type="reset">Cancel</button>
+              <button class="bg-red-500 text-white p-2 rounded" type="submit">Delete</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Show All Classes -->
+  <div class="container mx-auto px-4 pb-8">
+    <!-- Show All Classes Button -->
+    <div class="bg-white shadow-lg rounded-lg p-6 max-w-5xl mx-auto mb-4">
+      <div class="text-center mb-4">
+        <h2 class="text-2xl font-semibold text-gray-800">Show All Classes</h2>
+      </div>
+      <div class="flex justify-center">
+        <button id="showClassesBtn" type="button" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">View</button>
+      </div>
+    </div>
+    
+    <!-- Classes Table -->
+    <div id="classesTable" class="hidden max-w-5xl mx-auto">
+      <table class="min-w-full table-auto border border-gray-300">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="border px-4 py-2 text-left">Day</th>
+            <th class="border px-4 py-2 text-left">Location</th>
+            <th class="border px-4 py-2 text-left">Name</th>
+            <th class="border px-4 py-2 text-left">Time</th>
+            <th class="border px-4 py-2 text-left">Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#classOptions}}
+          <tr>
+            <td class="border px-4 py-2">{{day}}</td>
+            <td class="border px-4 py-2">{{location}}</td>
+            <td class="border px-4 py-2">{{name}}</td>
+            <td class="border px-4 py-2">{{time}}</td>
+            <td class="border px-4 py-2">{{price}}</td>
+          </tr>
+          {{/classOptions}}
+          {{^classOptions}}
+          <tr>
+            <td colspan="4" class="text-center py-4 text-gray-500">No classes available.</td>
+          </tr>
+          {{/classOptions}}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Javascript for populating form data -->
+  <script>
+  // Populate Class form
+    function populateClassData() {
+      const classId = document.getElementById('classDropdown').value;
+      if (classId) {
+        fetch(`/class/${classId}`)
+          .then(res => res.json())
+          .then(data => {
+            document.getElementById('updateClassID').value = data._id;
+            document.getElementById('updateClassName').value = data.name;
+            document.getElementById('updateClassDescription').value = data.description;
+            document.getElementById('updateClassDay').value = data.day;
+            document.getElementById('updateClassLocation').value = data.location;
+            document.getElementById('updateClassTime').value = data.time;
+            document.getElementById('updateClassPrice').value = data.price;
+          });
+      }
+    }
+
+    // Populate Delete Class form
+    function populateClassDataDelete() {
+      const classId = document.getElementById('deleteClassDropdown').value;
+      if (classId) {
+        fetch(`/class/${classId}`)
+          .then(res => res.json())
+          .then(data => {
+            document.getElementById('deleteClassID').value = data._id;
+            document.getElementById('deleteClassName').value = data.name;
+            document.getElementById('deleteClassDescription').value = data.description;
+            document.getElementById('deleteClassDay').value = data.day;
+            document.getElementById('deleteClassLocation').value = data.location;
+            document.getElementById('deleteClassTime').value = data.time;
+            document.getElementById('deleteClassPrice').value = data.price;
+          });
+      }
+    }
+
+    // Toggle course table visibility
+    const showBtn = document.getElementById('showClassesBtn');
+    const tableSection = document.getElementById('classesTable');
+
+    showBtn.addEventListener('click', () => {
+      if (tableSection.classList.contains('hidden')) {
+        // Show table
+        tableSection.classList.remove('hidden');
+        showBtn.textContent = 'Hide';
+        showBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+        showBtn.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
+      } else {
+        // Hide table
+        tableSection.classList.add('hidden');
+        showBtn.textContent = 'View';
+        showBtn.classList.remove('bg-yellow-500', 'hover:bg-yellow-600');
+        showBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+      }
+    });
+  </script>

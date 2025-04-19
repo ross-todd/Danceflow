@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white flex flex-col min-h-screen">
+
+  <!-- header partial -->
+  {{> header}}
+
+  <!-- ABOUT US SECTION -->
+  <div class="max-w-4xl mx-auto px-4 pt-40 pb-16">
+    <h1 class="text-3xl font-bold text-center text-black mb-8">About Us</h1>
+    <p class="text-lg text-gray-700 mb-6">
+      Welcome to <strong>Danceflow</strong> – a vibrant dance organisation dedicated to inspiring people of all ages and abilities to move, 
+      express, and connect through dance. Whether you're stepping into a studio for the first time or returning as an experienced dancer, 
+      we’re here to guide and support your journey with a wide range of fun and inclusive classes.
+    </p>
+    <p class="text-lg text-gray-800 mb-6">
+      DanceFlow was founded in 2023 with a mission to bring people together through the joy of dance. Since our humble beginnings, 
+      we’ve grown into a community where dancers of all ages and abilities can connect, learn, and express themselves.
+    </p>
+    <p class="text-lg text-gray-800 mb-6">
+      DanceFlow was created with the aim of providing a supportive and inclusive environment where the local community can come together through the joy of movement. 
+      Whether it’s ballet, ballroom, street, or salsa, our classes are designed to celebrate diverse dance styles and foster creativity, connection, and self-expression in a positive space.
+    </p>
+    <p class="text-lg text-gray-800 mb-6">
+      We’re based in the gym at Caledonian University in Glasgow, just a short walk from Buchan Bus Station, making it easy for you to join us in the heart of the city. Our classes and courses take place in the gym's in Caledonain University, University of Glasgow, and Strathclyde University.
+    </p>
+    <p class="text-lg text-gray-800 mb-6">
+      What drives us is a genuine love for dance, community spirit, and the belief in the power of movement to boost confidence and wellbeing. 
+      Our talented instructors bring energy and expertise to every class, making sure everyone feels encouraged, supported, and challenged in the best way.
+    </p>
+
+    <p class="text-lg text-gray-00 mt-10 text-center">
+    Ready to move? Visit our class and course listings to book your spot today and start your dance journey with DanceFlow!
+  </p>
+  </div>
+
+  <!-- LOCATION SECTION -->
+  <div class="bg-white py-24 px-4">
+    <div class="max-w-7xl mx-auto">
+      <!-- Heading -->
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-black">Our Location</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Google Map Embed -->
+        <div class="w-full h-[400px]">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2238.760693318471!2d-4.2525351226110635!3d55.86681827312656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4888441f6d37e73b%3A0xe44f66a88fe29ff5!2sGlasgow%20Caledonian%20University!5e0!3m2!1sen!2suk!4v1744114296785!5m2!1sen!2suk"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="bg-gray-100 rounded-lg shadow p-8">
+          <div class="mb-6">
+            <h3 class="text-xl font-semibold text-gray-900">Our Address</h3>
+            <p class="mt-2 text-gray-700">Cowcaddens Road, Glasgow, G4 0BA</p>
+          </div>
+          <div class="mb-6">
+            <h3 class="text-xl font-semibold text-gray-900">Hours</h3>
+            <p class="mt-2 text-gray-700">Monday - Friday: 9am - 8pm</p>
+            <p class="text-gray-700">Saturday: 9am - 5pm</p>
+            <p class="text-gray-700">Sunday: 9am - 4pm</p>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold text-gray-900">Contact</h3>
+            <p class="mt-2 text-gray-700">Email: rtodd303@caledonian.ac.uk</p>
+            <p class="text-gray-700">Phone: 0800 123 4567</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  {{> footer}}
+
+</body>
+</html>

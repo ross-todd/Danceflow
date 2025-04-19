@@ -1,0 +1,275 @@
+<!-- CLASSES -->
+<div class="py-8">
+  <div class="container mx-auto px-4 mt-10">
+    <div class="container mx-auto px-6 p-4">
+      <h2 class="text-4xl font-bold text-gray-800 text-center">Manage Users/Organisers</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- Add New Organiser -->
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <div class="text-center mb-4">
+          <h2 class="text-2xl font-semibold text-gray-800">Add New Profile</h2>
+        </div>
+        <form method="POST" action="/admin/addOrganiser">
+          <div class="mb-4">
+            <label class="block text-gray-700" for="organiserFirstName">First Name</label>
+            <input class="w-full p-2 border border-gray-300 rounded" id="organiserFirstName" name="fname" required>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700" for="organiserLastName">Last Name</label>
+            <input class="w-full p-2 border border-gray-300 rounded" id="organiserLastName" name="lname" required>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700" for="organiserEmail">Email</label>
+            <input class="w-full p-2 border border-gray-300 rounded" type="email" id="organiserEmail" name="email" required autocomplete="off">
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700" for="organiserMobile">Mobile</label>
+            <input class="w-full p-2 border border-gray-300 rounded" id="organiserMobile" name="mobile" required>
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700" for="organiserPassword">Password</label>
+            <input class="w-full p-2 border border-gray-300 rounded" type="password" id="organiserPassword" name="password" required autocomplete="new-password">
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700" for="organiserRole">Role</label>
+                <select class="w-full p-2 border border-gray-300 rounded" id="organiserRole" name="role" required>
+                    <option value="">Select a Role</option>
+                    <option>Admin</option>
+                    <option>Manager</option>
+                    <option>Public</option>
+                </select>
+            </div>
+          <div class="flex justify-between">
+            <button class="bg-blue-500 text-white p-2 rounded" type="reset">Reset</button>
+            <button class="bg-green-500 text-white p-2 rounded" type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Update Organiser -->
+<div class="bg-white shadow-lg rounded-lg p-6">
+  <div class="text-center mb-4">
+    <h2 class="text-2xl font-semibold text-gray-800">Update Profile</h2>
+  </div>
+  <form method="POST" action="/admin/updateOrganiser">
+    <div class="mb-4">
+      <label class="block text-gray-700" for="organiserId">Select Organiser</label>
+      <select id="organiserDropdown" name="organiserId" onchange="populateOrganiserData()" class="w-full p-2 border border-gray-300 rounded">
+        <option value="">Select a User</option>
+        {{#users}}
+          <option value="{{_id}}">{{fname}}</option>
+        {{/users}}
+      </select>
+    </div>
+    <input class="w-full p-2 border border-gray-300 rounded" id="updateOrganiserId" type="hidden" name="id" required>
+    <input class="w-full p-2 border border-gray-300 rounded" id="updateOrganiserFirstName" type="hidden" name="fname" required>
+    <div class="mb-4">
+      <label class="block text-gray-700" for="updateOrganiserLastName">Last Name</label>
+      <input class="w-full p-2 border border-gray-300 rounded" id="updateOrganiserLastName" name="lname" required>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700" for="updateOrganiserEmail">Email</label>
+      <input class="w-full p-2 border border-gray-300 rounded" type="email" id="updateOrganiserEmail" name="email" required autocomplete="off">
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700" for="updateOrganiserMobile">Mobile</label>
+      <input class="w-full p-2 border border-gray-300 rounded" id="updateOrganiserMobile" name="mobile" required>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700" for="updateOrganiserPassword">Password</label>
+     <input class="w-full p-2 border border-gray-300 rounded" type="password" id="updateOrganiserPassword" name="password" placeholder="" value="" autocomplete="new-password">
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700" for="updateOrganiserRole">Role</label>
+      <select class="w-full p-2 border border-gray-300 rounded" id="updateOrganiserRole" name="role" required>
+            <option value="">Role</option>
+            <option>Admin</option>
+            <option>Manager</option>
+            <option>Public</option>
+        </select>
+    </div>
+    <div class="flex justify-between">
+      <button class="bg-blue-500 text-white p-2 rounded" type="reset">Cancel</button>
+      <button class="bg-green-500 text-white p-2 rounded" type="submit">Update</button>
+    </div>
+  </form>
+</div>
+
+
+      <!-- Delete Organiser -->
+        <div class="bg-white shadow-lg rounded-lg p-6">
+        <div class="text-center mb-4">
+            <h2 class="text-2xl font-semibold text-gray-800">Delete Profile</h2>
+        </div>
+        <form method="POST" action="/admin/deleteOrganiser">
+            <div class="mb-4">
+            <label class="block text-gray-700" for="deleteOrganiserId">Select Organiser</label>
+            <select id="deleteOrganiserDropdown" name="organiserId" onchange="populateOrganiserDataDelete()" class="w-full p-2 border border-gray-300 rounded">
+                <option value="">Select a User</option>
+                {{#users}}
+                <option value="{{_id}}">{{fname}}</option>
+                {{/users}}
+            </select>
+            </div>
+            <div class="mb-4">
+            <label class="block text-gray-700 hidden" for="deleteOrganiserId">Organiser ID</label>
+            <input class="w-full p-2 border border-gray-300 rounded" type="hidden" id="deleteOrganiserId" name="id" required readonly>
+            </div>
+            <div class="mb-4">
+            <label class="block text-gray-700 hidden" for="deleteOrganiserFirstName">First Name</label>
+            <input class="w-full p-2 border border-gray-300 rounded" type="hidden" id="deleteOrganiserFirstName" name="fname" required readonly>
+            </div>
+            <div class="mb-4">
+            <label class="block text-gray-700" for="deleteOrganiserLastName">Last Name</label>
+            <input class="w-full p-2 border border-gray-300 rounded" id="deleteOrganiserLastName" name="lname" readonly>
+            </div>
+            <div class="mb-4">
+            <label class="block text-gray-700" for="deleteOrganiserEmail">Email</label>
+            <input class="w-full p-2 border border-gray-300 rounded" type="email" id="deleteOrganiserEmail" name="email" readonly autocomplete="off">
+            </div>
+            <div class="mb-4">
+            <label class="block text-gray-700" for="deleteOrganiserMobile">Mobile</label>
+            <input class="w-full p-2 border border-gray-300 rounded" id="deleteOrganiserMobile" name="mobile" readonly>
+            </div>
+            <div class="mb-4">
+            <label class="block text-gray-700" for="deleteOrganiserPassword">Password</label>
+            <input class="w-full p-2 border border-gray-300 rounded" id="deleteOrganiserPassword" name="password" readonly value="">
+            </div>
+            <div class="mb-4">
+            <label class="block text-gray-700" for="deleteOrganiserRole">Role</label>
+            <input class="w-full p-2 border border-gray-300 rounded" id="deleteOrganiserRole" name="role" readonly>
+            </div>
+            <div class="flex justify-between">
+            <button class="bg-blue-500 text-white p-2 rounded" type="reset">Cancel</button>
+            <button class="bg-red-500 text-white p-2 rounded" type="submit">Delete</button>
+            </div>
+        </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+<!-- Show All Organisers Section -->
+<div class="container mx-auto px-4 pb-8">
+  <!-- Show All Organisers Button -->
+  <div class="bg-white shadow-lg rounded-lg p-6 max-w-5xl mx-auto mb-4">
+    <div class="text-center mb-4">
+      <h2 class="text-2xl font-semibold text-gray-800">Show All Organisers</h2>
+    </div>
+    <div class="flex justify-center">
+      <button id="showOrganisersBtn" type="button" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">View</button>
+    </div>
+  </div>
+
+  <!-- Organisers Table -->
+  <div id="organisersTable" class="hidden max-w-5xl mx-auto">
+    <table class="min-w-full table-auto border border-gray-300">
+      <thead>
+        <tr>
+          <th class="border px-4 py-2 text-left">First Name</th>
+          <th class="border px-4 py-2 text-left">Last Name</th>
+          <th class="border px-4 py-2 text-left">Email</th>
+          <th class="border px-4 py-2 text-left">Mobile</th>
+          <th class="border px-4 py-2 text-left">Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#users}}
+        <tr>
+          <td class="border px-4 py-2">{{fname}}</td>
+          <td class="border px-4 py-2">{{lname}}</td>
+          <td class="border px-4 py-2">{{email}}</td>
+          <td class="border px-4 py-2">{{mobile}}</td>
+          <td class="border px-4 py-2">{{role}}</td>
+          
+        </tr>
+        {{/users}}
+        {{^users}}
+        <tr>
+          <td colspan="5" class="text-center py-4 text-gray-500">No organisers available.</td>
+        </tr>
+        {{/users}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Javascript for populating form data -->
+<script>
+// Populate data for the update section
+function populateOrganiserData() {
+  const organiserId = document.getElementById('organiserDropdown').value;
+  if (organiserId) {
+    // Clear the password field before fetching new data
+    document.getElementById('updateOrganiserPassword').value = '';
+
+    fetch(`/organiser/${organiserId}`)
+      .then(res => res.json())
+      .then(data => {
+        // Check if data exists before trying to populate fields
+        if (data) {
+          document.getElementById('updateOrganiserId').value = data._id;
+          document.getElementById('updateOrganiserFirstName').value = data.fname;
+          document.getElementById('updateOrganiserLastName').value = data.lname;
+          document.getElementById('updateOrganiserEmail').value = data.email;
+          document.getElementById('updateOrganiserMobile').value = data.mobile;
+          // Clear the password field on data load
+          document.getElementById('updateOrganiserPassword').value = '';  // Ensure it's blank
+          document.getElementById('updateOrganiserRole').value = data.role;
+        } else {
+          console.error('No data returned from server');
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching organiser data:', error);
+      });
+  } else {
+    // If no organiser is selected, make sure the password field is cleared.
+    document.getElementById('updateOrganiserPassword').value = '';
+  }
+}
+
+// Populate data for the delete section
+function populateOrganiserDataDelete() {
+  const organiserId = document.getElementById('deleteOrganiserDropdown').value;
+  if (organiserId) {
+    fetch(`/organiser/${organiserId}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('deleteOrganiserId').value = data._id;
+        document.getElementById('deleteOrganiserFirstName').value = data.fname;
+        document.getElementById('deleteOrganiserLastName').value = data.lname;
+        document.getElementById('deleteOrganiserEmail').value = data.email;
+        document.getElementById('deleteOrganiserMobile').value = data.mobile;
+        document.getElementById('deleteOrganiserPassword').value = '';  // Clear password for deletion
+        document.getElementById('deleteOrganiserRole').value = data.role;
+      });
+  }
+}
+
+// Toggle organisers table view
+const showOrganisersBtn = document.getElementById('showOrganisersBtn');
+const organisersTableSection = document.getElementById('organisersTable');
+
+showOrganisersBtn.addEventListener('click', () => {
+  if (organisersTableSection.classList.contains('hidden')) {
+    // Show table
+    organisersTableSection.classList.remove('hidden');
+    showOrganisersBtn.textContent = 'Hide'; // Change button text
+    showOrganisersBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+    showOrganisersBtn.classList.add('bg-yellow-500', 'hover:bg-yellow-600'); // Apply orange background
+  } else {
+    // Hide table
+    organisersTableSection.classList.add('hidden');
+    showOrganisersBtn.textContent = 'View'; // Reset button text
+    showOrganisersBtn.classList.remove('bg-yellow-500', 'hover:bg-yellow-600'); // Remove orange background
+    showOrganisersBtn.classList.add('bg-blue-500', 'hover:bg-blue-600'); // Reset to blue background
+  }
+});
+
+
+
+</script>

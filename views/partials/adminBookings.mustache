@@ -1,0 +1,147 @@
+<div class="container mx-auto px-4 pb-8 mt-10">
+  <h2 class="text-4xl font-bold text-gray-800 text-center pb-6">Bookings</h2>
+  <div class="bg-white shadow-lg rounded-lg p-6 max-w-5xl mx-auto mb-4">
+    
+    <!-- Buttons Section -->
+    <div class="flex justify-evenly gap-6 mb-6">
+      <div class="text-center">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Classes Booked</h2>
+        <button id="showBookedClassesBtn" type="button" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+          View
+        </button>
+      </div>
+      <div class="text-center">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Courses Booked</h2>
+        <button id="showBookedCoursesBtn" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+          View
+        </button>
+      </div>
+    </div>
+
+    <!-- Booked Classes Table -->
+    <div id="bookedClassesTable" class="hidden">
+      {{#groupedClassBookings}}
+      <table class="min-w-full table-auto border border-gray-300 mb-6">
+        <thead>
+          <tr class="bg-gray-100">
+            <th colspan="7" class="text-left text-xl px-4 py-2">
+              {{className}} — Total Booked: {{count}}
+            </th>
+          </tr>
+          <tr>
+            <th class="border px-4 py-2 text-left">Class Name</th>
+            <th class="border px-4 py-2 text-left">Name</th>
+            <th class="border px-4 py-2 text-left">Email</th>
+            <th class="border px-4 py-2 text-left">Day</th>
+            <th class="border px-4 py-2 text-left">Time</th>
+            <th class="border px-4 py-2 text-left">Price</th>
+            <th class="border px-4 py-2 text-left">Date Booked</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#bookings}}
+          <tr>
+            <td class="border px-4 py-2">{{className}}</td>
+            <td class="border px-4 py-2">{{name}}</td>
+            <td class="border px-4 py-2">{{email}}</td>
+            <td class="border px-4 py-2">{{day}}</td>
+            <td class="border px-4 py-2">{{time}}</td>
+            <td class="border px-4 py-2">{{price}}</td>
+            <td class="border px-4 py-2">{{dateBooked}}</td>
+          </tr>
+          {{/bookings}}
+        </tbody>
+      </table>
+      {{/groupedClassBookings}}
+
+      {{^groupedClassBookings}}
+      <p class="text-center text-gray-500 py-4">No booked classes available.</p>
+      {{/groupedClassBookings}}
+    </div>
+
+    <!-- Booked Courses Table -->
+    <div id="bookedCoursesTable" class="hidden">
+      {{#groupedCourseBookings}}
+      <table class="min-w-full table-auto border border-gray-300 mb-6">
+        <thead>
+          <tr class="bg-gray-100">
+            <th colspan="7" class="text-left text-xl px-4 py-2">
+              {{courseName}} — Total Booked: {{count}}
+            </th>
+          </tr>
+          <tr>
+            <th class="border px-4 py-2 text-left">Course Name</th>
+            <th class="border px-4 py-2 text-left">Name</th>
+            <th class="border px-4 py-2 text-left">Email</th>
+            <th class="border px-4 py-2 text-left">Month</th>
+            <th class="border px-4 py-2 text-left">Schedule</th>
+            <th class="border px-4 py-2 text-left">Price</th>
+            <th class="border px-4 py-2 text-left">Date Booked</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#bookings}}
+          <tr>
+            <td class="border px-4 py-2">{{courseName}}</td>
+            <td class="border px-4 py-2">{{name}}</td>
+            <td class="border px-4 py-2">{{email}}</td>
+            <td class="border px-4 py-2">{{month}}</td>
+            <td class="border px-4 py-2">{{schedule}}</td>
+            <td class="border px-4 py-2">{{price}}</td>
+            <td class="border px-4 py-2">{{dateBooked}}</td>
+          </tr>
+          {{/bookings}}
+        </tbody>
+      </table>
+      {{/groupedCourseBookings}}
+
+      {{^groupedCourseBookings}}
+      <p class="text-center text-gray-500 py-4">No booked courses available.</p>
+      {{/groupedCourseBookings}}
+    </div>
+  </div>
+</div>
+
+<!-- Javascript for populating form data -->
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Show/Hide Booked Classes Table
+    const showBookedClassesBtn = document.getElementById('showBookedClassesBtn');
+    const bookedClassesTable = document.getElementById('bookedClassesTable');
+    showBookedClassesBtn.addEventListener('click', () => {
+      const isHidden = bookedClassesTable.classList.contains('hidden');
+      bookedClassesTable.classList.toggle('hidden');
+      
+      if (isHidden) {
+        showBookedClassesBtn.textContent = 'Hide';
+        showBookedClassesBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+        showBookedClassesBtn.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
+      } else {
+        showBookedClassesBtn.textContent = 'View';
+        showBookedClassesBtn.classList.remove('bg-yellow-500', 'hover:bg-yellow-600');
+        showBookedClassesBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+      }
+    });
+
+    // Show/Hide Booked Courses Table
+    const showBookedCoursesBtn = document.getElementById('showBookedCoursesBtn');
+    const bookedCoursesTable = document.getElementById('bookedCoursesTable');
+    showBookedCoursesBtn.addEventListener('click', () => {
+      const isHidden = bookedCoursesTable.classList.contains('hidden');
+      bookedCoursesTable.classList.toggle('hidden');
+      
+      if (isHidden) {
+        showBookedCoursesBtn.textContent = 'Hide';
+        showBookedCoursesBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+        showBookedCoursesBtn.classList.add('bg-yellow-500', 'hover:bg-yellow-600');
+      } else {
+        showBookedCoursesBtn.textContent = 'View';
+        showBookedCoursesBtn.classList.remove('bg-yellow-500', 'hover:bg-yellow-600');
+        showBookedCoursesBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

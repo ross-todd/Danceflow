@@ -1,0 +1,110 @@
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  #menu-toggle:checked ~ #mobile-menu {
+    display: flex;
+  }
+
+  html {
+    overflow-y: scroll;
+  }
+</style>
+
+</head>
+<body class="bg-white">
+  <!-- NAVBAR -->
+  <nav class="bg-black shadow-lg w-full px-6 py-4 fixed top-0 left-0 z-10 sm:px-4 sm:py-3">
+    <div class="container mx-auto flex justify-between items-center w-full">
+      <!-- Logo -->
+      <div class="flex items-center h-10">
+        <a href="/">
+          <img src="/images/logo.png" alt="Logo" class="h-10 w-auto">
+        </a>
+      </div>
+
+      <!-- Navbar links for larger screens -->
+      <ul id="desktop-menu" class="hidden lg:flex flex-row space-x-12 text-white text-2xl font-semibold">
+        <li><a href="/" class="hover:text-pink-300">Home</a></li>
+        <li><a href="/about" class="hover:text-pink-300">About</a></li>
+        <li><a href="/classes" class="hover:text-pink-300">Classes</a></li>
+        <li><a href="/courses" class="hover:text-pink-300">Courses</a></li>
+        {{#showAdminButton}}
+        <li id="admin-link"><a href="/admin" class="hover:text-pink-300">Admin</a></li>
+        {{/showAdminButton}}
+      </ul>
+
+      <!-- Login/Logout Buttons for larger screens -->
+      <div class="hidden lg:flex items-center space-x-4">
+        {{^isLoggedIn}}
+        <a href="/login" class="inline-block w-40 text-center py-3 px-4 bg-[#a87c9c] hover:bg-[#c69fb8] text-white font-medium rounded-md">
+          Login
+        </a>
+        {{/isLoggedIn}}
+        {{#isLoggedIn}}
+        <a href="/logout" class="inline-block w-40 text-center py-3 px-4 bg-[#a87c9c] hover:bg-[#c69fb8] text-white font-medium rounded-md">
+          Logout
+        </a>
+        {{/isLoggedIn}}
+      </div>
+
+      <!-- Hamburger menu for mobile screens -->
+      <div class="lg:hidden">
+        <label for="menu-toggle" class="cursor-pointer text-white">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </label>
+      </div>
+
+      <!-- Checkbox to toggle menu visibility on mobile -->
+      <input type="checkbox" id="menu-toggle" class="hidden" />
+      
+      <!-- Mobile Menu -->
+      <ul id="mobile-menu"
+        class="hidden flex-col space-y-4 bg-black text-white text-lg font-semibold w-full absolute left-0 top-full p-4 lg:hidden">
+        <li><a href="/" class="hover:text-pink-300">Home</a></li>
+        <li><a href="/about" class="hover:text-pink-300">About</a></li>
+        <li><a href="/classes" class="hover:text-pink-300">Classes</a></li>
+        <li><a href="/courses" class="hover:text-pink-300">Courses</a></li>
+        {{#showAdminButton}}
+        <li><a href="/admin" class="hover:text-pink-300">Admin</a></li>
+        {{/showAdminButton}}
+        {{^isLoggedIn}}
+        <li>
+          <a href="/login" class="inline-block w-28 sm:w-40 text-center py-2 sm:py-3 px-3 sm:px-4 bg-[#a87c9c] hover:bg-[#c69fb8] text-sm sm:text-base text-white font-medium rounded-md">
+            Login
+          </a>
+        </li>
+        {{/isLoggedIn}}
+        {{#isLoggedIn}}
+        <li>
+          <a href="/logout" class="inline-block w-28 sm:w-40 text-center py-2 sm:py-3 px-3 sm:px-4 bg-[#a87c9c] hover:bg-[#c69fb8] text-sm sm:text-base text-white font-medium rounded-md">
+            Logout
+          </a>
+        </li>
+        {{/isLoggedIn}}
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 pt-24">
+    <!-- Your main content goes here -->
+  </main>
+
+  <!-- JS: Reset menu on resize -->
+  <script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 1024) {
+        menuToggle.checked = false;
+        mobileMenu.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
