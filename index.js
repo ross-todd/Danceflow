@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+console.log('JWT_SECRET:', process.env.JWT_SECRET); 
 const express = require('express');
 const mustacheExpress = require('mustache-express');
 const cookieParser = require('cookie-parser');
