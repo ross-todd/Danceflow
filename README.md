@@ -1,4 +1,4 @@
-# DanceFlow
+# DanceFlow    https://danceflow.onrender.com/
 
 DanceFlow is a web-based dance class booking system built using Node.js, Express, Mustache, and NeDB.
 
@@ -81,3 +81,5 @@ Usernames and passwords (all passwords are the same)
    - Admin user    -  Admin panell rights:                                              
    - Manager user  -  Full Admin rigts including adding, updating, deleting users       
   
+
+All console.logs and error.lofgs have been redirected to a server.log file for logging  
